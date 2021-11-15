@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.dao.IAccountDao">
+    <insert id="insertAccount">
+      insert into t_account(aname,balance) values(#{aname},#{money})
+    </insert>
+    <update id="updateAccount">
+        update t_account
+        set
+        <if test="flag=">
+            balance=balance-(#{price}*#{amount})
+        </if>
+        <if test="flag">
+            balance=balance+(#{price}*#{amount})
+        </if>
+        where aname = #{aname}
+    </update>
+</mapper>

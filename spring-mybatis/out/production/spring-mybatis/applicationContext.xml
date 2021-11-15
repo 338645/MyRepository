@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--==========================IOC======================================-->
+    <!--注册dataSource:spring内置连接池-->
+    <context:property-placeholder location="jdbc.properties"/>
+
+    <bean id="c3p0DataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql:///springdatabase"/>
+        <property name="username" value="root"/>
+        <property name="password" value="338645"/>
+    </bean>
+
+    <!--生成dao代理对象-->
+    <bean id="mySqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="mybatis.xml"/>
+        <property name="dataSource" ref="c3p0DataSource"/>
+    </bean>
+
+    <!--
+        当前配置会为所有的接口生成代理对象
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="mySqlSessionFactory"/>
+        <property name="basePackage" value="com.bjpowernode.dao"/>
+    </bean>
+
+    <!--<bean id="accountDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="mySqlSessionFactory"/>
+        <property name="mapperInterface" value="com.bjpowernode.dao.IAccountDao"/>
+    </bean>
+
+    <bean id="stockDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="mySqlSessionFactory"/>
+        <property name="mapperInterface" value="com.bjpowernode.dao.IStockDao"/>
+    </bean>-->
+
+    <!--注册service-->
+    <bean id="buyStockService" class="com.bjpowernode.service.impl.BuyStockService">
+        <property name="adao" ref="IAccountDao"/>
+        <property name="sdao" ref="IStockDao"/>
+    </bean>
+
+    <!--===============================AOP=======================================-->
+    <!--spring事务管理：AOP配置-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="c3p0DataSource"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!--这里指定为每一个连接点配置需要使用的事务属性-->
+            <tx:method name="open*" isolation="DEFAULT" propagation="REQUIRED"/>
+            <tx:method name="buyStock" isolation="DEFAULT" propagation="REQUIRED"
+                       rollback-for="com.bjpowernode.exception.BuyStockException"/>
+            <tx:method name="*" rollback-for="com.bjpowernode.exception.BuyStockException"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="myPointCut" expression="execution(* * ..service..*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="myPointCut"/>
+    </aop:config>
+
+</beans>

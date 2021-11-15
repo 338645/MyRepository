@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/web/WEB-INF/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://E:/tools/spring-framework-4.2.1.RELEASE/libs/spring-webmvc-portlet-4.2.1.RELEASE-sources.jar!/" />
+      <root url="jar://E:/tools/spring-framework-4.2.1.RELEASE/libs/spring-web-4.2.1.RELEASE-sources.jar!/" />
+      <root url="jar://E:/tools/spring-framework-4.2.1.RELEASE/libs/spring-webmvc-4.2.1.RELEASE-sources.jar!/" />
+      <root url="jar://E:/tools/spring-framework-4.2.1.RELEASE/libs/spring-context-support-4.2.1.RELEASE-sources.jar!/" />
+      <root url="jar://E:/tools/spring-framework-4.2.1.RELEASE/libs/spring-context-4.2.1.RELEASE-sources.jar!/" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/web/WEB-INF/lib" recursive="false" />
+  </library>
+</component>

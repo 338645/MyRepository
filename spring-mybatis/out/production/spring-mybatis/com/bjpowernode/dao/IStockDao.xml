@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.dao.IStockDao">
+    <insert id="insertStock">
+      insert into t_stock(sname,count,price) values (#{sname},#{count},#{price})
+    </insert>
+    <update id="updateStock">
+        update t_stock
+        <set>
+            <if test="flag=">
+                count = count + #{amount}
+            </if>
+            <if test="flag">
+                count = count - #{amount}
+            </if>
+        </set>
+        where sname =#{sname}
+    </update>
+</mapper>

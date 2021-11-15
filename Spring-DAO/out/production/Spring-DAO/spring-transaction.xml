@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
+
+    <!--==========================IOC======================================-->
+    <!--注册dataSource:spring内置连接池-->
+    <context:property-placeholder location="jdbc.properties"/>
+
+    <bean id="jdbcDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <!--注册dao-->
+    <bean id="accountDao" class="com.bjpowernode.dao.impl.AccountDao">
+        <property name="dataSource" ref="jdbcDataSource"/>
+    </bean>
+
+    <bean id="stockDao" class="com.bjpowernode.dao.impl.StockDao">
+        <property name="dataSource" ref="jdbcDataSource"/>
+    </bean>
+
+    <!--注册service-->
+    <bean id="buyStockService" class="com.bjpowernode.service.impl.BuyStockService">
+        <property name="adao" ref="accountDao"/>
+        <property name="sdao" ref="stockDao"/>
+    </bean>
+
+    <!--===============================AOP=======================================-->
+    <!--spring事务管理：事务代理工厂bean-->
+    <bean id="transactionFactory" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="jdbcDataSource"/>
+    </bean>
+    <bean id="serviceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager" ref="transactionFactory"/>
+        <property name="target" ref="buyStockService"/>
+        <property name="transactionAttributes">
+            <props>
+                <!--
+                    -异常：发生异常之后回滚
+                    +异常：发生异常之后提交
+                -->
+                <prop key="open*">ISOLATION_DEFAULT,PROPAGATION_REQUIRED</prop>
+                <prop key="buyStock">ISOLATION_DEFAULT,PROPAGATION_REQUIRED,-BuyStockException</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

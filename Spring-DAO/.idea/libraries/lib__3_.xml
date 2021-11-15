@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="lib (3)">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/src/com/bjpowernode/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://E:/tools/spring-framework-4.2.1.RELEASE/libs/spring-jms-4.2.1.RELEASE-sources.jar!/" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/src/com/bjpowernode/lib" recursive="false" />
+  </library>
+</component>
