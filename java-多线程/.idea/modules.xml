@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/01_多线程1/01_多线程1.iml" filepath="$PROJECT_DIR$/01_多线程1/01_多线程1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/02_多线程线程安全问题/02_多线程线程安全问题.iml" filepath="$PROJECT_DIR$/02_多线程线程安全问题/02_多线程线程安全问题.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../3_多线程锁/03_多线程锁.iml" filepath="$PROJECT_DIR$/../3_多线程锁/03_多线程锁.iml" />
+      <module fileurl="file://$PROJECT_DIR$/04_生产者模式和消费者模式/04_生产者模式和消费者模式.iml" filepath="$PROJECT_DIR$/04_生产者模式和消费者模式/04_生产者模式和消费者模式.iml" />
+      <module fileurl="file://$PROJECT_DIR$/06_ThreadLocal的使用/05_通过管道流实现线程之间的通信.iml" filepath="$PROJECT_DIR$/06_ThreadLocal的使用/05_通过管道流实现线程之间的通信.iml" />
+      <module fileurl="file://$PROJECT_DIR$/06_ThreadLocal的使用/06_ThreadLocal的使用.iml" filepath="$PROJECT_DIR$/06_ThreadLocal的使用/06_ThreadLocal的使用.iml" />
+      <module fileurl="file://$PROJECT_DIR$/07_Lock显示锁/07_Lock显示锁.iml" filepath="$PROJECT_DIR$/07_Lock显示锁/07_Lock显示锁.iml" />
+      <module fileurl="file://$PROJECT_DIR$/08_线程组/08_线程组.iml" filepath="$PROJECT_DIR$/08_线程组/08_线程组.iml" />
+    </modules>
+  </component>
+</project>
